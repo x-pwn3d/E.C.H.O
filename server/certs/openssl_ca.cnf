@@ -30,8 +30,8 @@ prompt              = no
 req_extensions      = v3_req
 
 [ req_distinguished_name ]
-O  = MiniC2-CA
-CN = MiniC2-CA
+O  = ECHO-CA
+CN = ECHO-CA
 
 [ v3_ca ]
 basicConstraints = critical, CA:TRUE, pathlen:0
@@ -45,5 +45,5 @@ keyUsage = nonRepudiation, digitalSignature, keyEncipherment
 subjectAltName = @alt_names
 
 [ alt_names ]
-IP.1 = 192.168.56.30
+IP.1 = # Add your SERVER'S IP HERE
 DNS.1 = localhost

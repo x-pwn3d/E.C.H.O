@@ -73,11 +73,12 @@ pip install -r client/requirements.txt
 
 ### 2. Generate TLS certs for local lab (one-time)
 
+
 ```bash
 # from server/certs
 cd server/certs
 chmod +x setup_certs.sh 
-# edit openssl_ca.cnf if you need alternate IPs/DNS
+# IMPORTANT: edit openssl_ca.cnf to set your server's IP under [alt_names] (IP.1)
 ./setup_certs.sh   # script automates CA + server cert creation
 ```
 
