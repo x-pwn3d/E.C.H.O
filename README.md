@@ -146,12 +146,11 @@ chmod +x server/start_server.sh
  **9 - Recent results (detail view)**  
   Detailed view for the selected result (full output formatted). Use this to inspect historical outputs and downloaded files.
 
-**10 - Copy token (button)**  
-  Copies the current C2 auth token to the clipboard for easy pasting (e.g., when starting an agent). Keep the token secret, it authenticates API calls.
-
-**11 - Refresh (button)**  
+**10 - Refresh (button)**  
   Manually poll the server for updated agent and results lists. The UI also auto-polls in the background at the configured interval.
 
+**11 - Copy token (button)**  
+  Copies the current C2 auth token to the clipboard for easy pasting (e.g., when starting an agent). Keep the token secret, it authenticates API calls.
 
 
 ### 4. Run the agent (client)
