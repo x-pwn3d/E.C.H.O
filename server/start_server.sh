@@ -22,7 +22,7 @@ RESET="\033[0m"
 
 echo -e "${GREEN}"
 echo "======================================================="
-echo "  E.C.H.O - ephemeral C2 token for this run"
+echo "  E.C.H.O - ephemeral C2 token for this run (v0.1.0)"
 echo -e "  TOKEN : ${YELLOW}${ECHO_AUTH_TOKEN}${GREEN}"
 echo "======================================================="
 echo -e "${RESET}"
@@ -31,7 +31,7 @@ echo -e "${RESET}"
 if [ ! -f "$CERT_DIR/server.crt" ] || [ ! -f "$CERT_DIR/server.key" ]; then
   echo -e "${RED}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!${RESET}" >&2
   echo -e "${RED} ERROR: Certificates not found in ${CERT_DIR}.${RESET}" >&2
-  echo -e "${RED} Please run ./certs/setup_certs.sh (or generate_certs.sh) first.${RESET}" >&2
+  echo -e "${RED} Please run ./certs/setup_certs.sh first.${RESET}" >&2
   echo -e "${RED}!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!${RESET}" >&2
   echo -ne "\a" >&2
   exit 2

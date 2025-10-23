@@ -5,3 +5,4 @@ jinja2
 PySide6 
 requests
 aiofiles
+python-multipart

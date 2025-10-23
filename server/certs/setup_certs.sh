@@ -65,21 +65,18 @@ else
   echo "Server certificate already exists: $SERVER_CRT"
 fi
 
-# copy the CA certificate to client and admin_app if those dirs exist
-PROJECT_ROOT="$(cd "$CERT_DIR/.." && pwd)"
+# copy the CA certificate to client dir
+PROJECT_ROOT="$(cd "$CERT_DIR/../.." && pwd)"
 CLIENT_DIR="$PROJECT_ROOT/client/certs"
-ADMIN_DIR="$PROJECT_ROOT/admin_app"
 
-if [ -d "$CLIENT_DIR" ]; then
-  mkdir -p "$CLIENT_DIR"
+mkdir -p "$CLIENT_DIR"
+
+if [ -f "$CA_CRT" ]; then
   cp -f "$CA_CRT" "$CLIENT_DIR/ca.crt"
   echo "Copied $CA_CRT -> $CLIENT_DIR/ca.crt"
-fi
-
-if [ -d "$ADMIN_DIR" ]; then
-  mkdir -p "$ADMIN_DIR/certs"
-  cp -f "$CA_CRT" "$ADMIN_DIR/certs/ca.crt"
-  echo "Copied $CA_CRT -> $ADMIN_DIR/certs/ca.crt"
+else
+  echo "CA certificate $CA_CRT not found, cannot copy to client certs dir."
+  exit 1
 fi
 
 echo

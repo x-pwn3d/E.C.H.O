@@ -62,7 +62,7 @@ class Updater(QObject):
 class AdminGUI(QWidget):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("E.C.H.O Admin Console")
+        self.setWindowTitle("E.C.H.O Admin Console - v0.1.0")
         self.setWindowIcon(QIcon(os.path.join(HERE, "echo_icon.png")))
         self.resize(1000, 700)
         self._results = []
