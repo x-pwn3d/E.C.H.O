@@ -1,5 +1,16 @@
 # E.C.H.O -  Endpoint Command & Host Operations
 
+[![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux-lightgrey)](https://github.com/x-pwn3d/mini-c2)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue)](https://www.python.org/)
+[![Status](https://img.shields.io/badge/Status-Functional-brightgreen)](https://github.com/x-pwn3d/mini-c2)
+![License](https://img.shields.io/badge/License-MIT-orange)
+![TLS](https://img.shields.io/badge/TLS-Lab%20Certs-blue)
+![Lab](https://img.shields.io/badge/Lab-Educational-lightgrey)
+
+
+<img width="500" height="500" alt="55fda844-a8e2-4a74-a714-2994e9b86d64-removebg-preview" src="https://github.com/user-attachments/assets/fb7de49d-e3af-4622-9595-7e312b939292" />
+
+
 Lightweight educational C2 (Command & Control) for lab use.  
 **Purpose:** test basic agent/server interactions, remote command execution, file upload/download and a small admin GUI.
 
@@ -89,7 +100,7 @@ This produces:
 
 The script copies `ca.crt` into `client/certs/`.
 
-> **Screenshots to add:** `server/certs` directory listing after generation; terminal output showing success.
+<img width="932" height="437" alt="Capture d'écran 2025-10-23 193001" src="https://github.com/user-attachments/assets/2a70803d-9144-4611-93d1-af04e28612a0" />
 
 ### 3. Start the server + GUI 
 
@@ -105,6 +116,43 @@ You can use the provided `server/start_server.sh`. It:
 chmod +x server/start_server.sh
 ./server/start_server.sh
 ```
+
+<img width="1541" height="877" alt="Capture d'écran 2025-10-23 200636" src="https://github.com/user-attachments/assets/29605f53-658a-424e-a8be-806d9417e692" />
+
+**1 - Agents**  
+  List of discovered agents (hostnames + short id + last seen). Select an agent here to view details and target commands. Online agents are highlighted, offline ones are grayed out.
+
+**2 - Agent details**  
+  Read-only info for the currently selected agent: full agent ID, hostname, username, OS, first/last seen and any extra telemetry. Use this to confirm you’re talking to the right endpoint before sending commands.
+
+**3 - Command input (text field)**  
+  Enter the command or paths for the selected command type. Examples and syntax appear in the help label below the selector.
+
+**4 - Command type selector (EXEC / UPLOAD / DOWNLOAD)**  
+  Choose the command kind to send: `EXEC` runs a shell command on the agent, `UPLOAD` sends a local file to the agent, `DOWNLOAD` asks the agent to upload a file back to the server. The Browse button becomes enabled for `UPLOAD` when the selected agent is online.
+
+**5 - Browse (button)**  
+  Opens a file chooser to pick a local file for `UPLOAD`. Disabled when no agent is selected or the agent is offline (or when the command type is not `UPLOAD`).
+
+**6 - Send (button)**  
+  Queue the selected command for the chosen agent. Validates selection and basic inputs, then POSTs the command to the server queue.
+
+**7 - Last command output**  
+  Quick terminal-style display showing the latest result (stdout/stderr, filename, timestamp and command) for the currently selected agent. Helpful for fast triage without opening the full results viewer.
+
+**8 - Recent results (list)**  
+  Chronological list of recent result artifacts (timestamp, agent id, filename).
+
+ **9 - Recent results (detail view)**  
+  Detailed view for the selected result (full output formatted). Use this to inspect historical outputs and downloaded files.
+
+**10 - Copy token (button)**  
+  Copies the current C2 auth token to the clipboard for easy pasting (e.g., when starting an agent). Keep the token secret, it authenticates API calls.
+
+**11 - Refresh (button)**  
+  Manually poll the server for updated agent and results lists. The UI also auto-polls in the background at the configured interval.
+
+
 
 ### 4. Run the agent (client)
 
@@ -125,6 +173,9 @@ Example:
 [+] Received task: EXEC whoami
 [+] Uploaded successfully: ./secret.txt → uploads/
 ```
+
+<img width="1021" height="579" alt="Capture d'écran 2025-10-23 194016" src="https://github.com/user-attachments/assets/920abcc1-a8c3-48c7-a831-7508c226bc99" />
+
 
 ---
 
@@ -207,10 +258,4 @@ curl -k -H "X-Auth-Token: $ECHO_AUTH_TOKEN" -X POST https://localhost:8443/resul
   -H 'Content-Type: application/json' \
   -d '{"agent_id":"<id>","command":"EXEC whoami","cmd_id":"abc","result":{"stdout":"user","stderr":""}}'
 ```
-
----
-
-## License
-
-See `LICENSE` in repo root.
 
