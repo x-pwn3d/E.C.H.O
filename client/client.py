@@ -189,14 +189,10 @@ if __name__ == "__main__":
     parser.add_argument("--server", required=True, help="C2 server URL (ex: https://10.0.2.15:8443)")
     parser.add_argument("--cert", required=True, help="path to the client certificate (ca.crt)")
     parser.add_argument("--interval", type=int, default=10, help="beacon interval in seconds")
-    parser.add_argument("--token", type=str, default=None, help="X-Auth-Token (optional: also read from env ECHO_AUTH_TOKEN)")
+    parser.add_argument("--token",required=True,type=str, default=None, help="X-Auth-Token (optional: also read from env ECHO_AUTH_TOKEN)")
     args = parser.parse_args()
 
     token = args.token or os.environ.get("ECHO_AUTH_TOKEN")
     print_startup_banner(args.server, token)
-
-    if not token:
-        print(f"{bcolors.WARNING}[WARN] No X-Auth-Token provided. If server requires token, requests will fail.")
-        sys.exit(1)
 
     beacon_cycle(args.server, args.cert, agent_id=None, interval=args.interval, auth_token=token)
