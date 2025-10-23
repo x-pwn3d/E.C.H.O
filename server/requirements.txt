@@ -1,0 +1,7 @@
+# server/requirements.txt
+fastapi
+uvicorn[standard]
+jinja2
+PySide6 
+requests
+aiofiles

@@ -1,0 +1,22 @@
+# venvs
+**/.venv
+client/.venv
+server/.venv
+
+# certs & secrets
+server/certs/*.crt
+server/certs/*.key
+server/certs/*.srl
+server/certs/*.csr
+server/certs/index.txt
+!.gitkeep
+
+# pyinstaller files
+dist/
+build/
+__pycache__/
+*.pyc
+
+# uploads
+server/uploads
+server/uploads/*
