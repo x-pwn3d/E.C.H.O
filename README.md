@@ -8,7 +8,7 @@
 ![Lab](https://img.shields.io/badge/Lab-Educational-lightgrey)
 
 
-<img width="500" height="500" alt="55fda844-a8e2-4a74-a714-2994e9b86d64-removebg-preview" src="https://github.com/user-attachments/assets/fb7de49d-e3af-4622-9595-7e312b939292" />
+<img width="500" height="500" alt="echo-logo" src="https://github.com/user-attachments/assets/fb7de49d-e3af-4622-9595-7e312b939292" />
 
 
 Lightweight educational C2 (Command & Control) for lab use.  
@@ -100,7 +100,7 @@ This produces:
 
 The script copies `ca.crt` into `client/certs/`.
 
-<img width="932" height="437" alt="Capture d'écran 2025-10-23 193001" src="https://github.com/user-attachments/assets/2a70803d-9144-4611-93d1-af04e28612a0" />
+<img width="932" height="437" alt="cert_ok" src="https://github.com/user-attachments/assets/2a70803d-9144-4611-93d1-af04e28612a0" />
 
 ### 3. Start the server + GUI 
 
@@ -117,7 +117,7 @@ chmod +x server/start_server.sh
 ./server/start_server.sh
 ```
 
-<img width="1541" height="877" alt="Capture d'écran 2025-10-23 200636" src="https://github.com/user-attachments/assets/29605f53-658a-424e-a8be-806d9417e692" />
+<img width="1541" height="877" alt="GUI ECHO" src="https://github.com/user-attachments/assets/29605f53-658a-424e-a8be-806d9417e692" />
 
 **1 - Agents**  
   List of discovered agents (hostnames + short id + last seen). Select an agent here to view details and target commands. Online agents are highlighted, offline ones are grayed out.
@@ -174,7 +174,7 @@ Example:
 [+] Uploaded successfully: ./secret.txt → uploads/
 ```
 
-<img width="1021" height="579" alt="Capture d'écran 2025-10-23 194016" src="https://github.com/user-attachments/assets/920abcc1-a8c3-48c7-a831-7508c226bc99" />
+<img width="1021" height="579" alt="client" src="https://github.com/user-attachments/assets/920abcc1-a8c3-48c7-a831-7508c226bc99" />
 
 
 ---
