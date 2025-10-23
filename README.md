@@ -173,8 +173,7 @@ Example:
 [+] Uploaded successfully: ./secret.txt → uploads/
 ```
 
-<img width="1021" height="579" alt="client" src="https://github.com/user-attachments/assets/920abcc1-a8c3-48c7-a831-7508c226bc99" />
-
+<img width="1025" height="623" alt="client" src="https://github.com/user-attachments/assets/0cace5bf-ae66-4f29-b3fb-220233c0a2f1" />
 
 ---
 
